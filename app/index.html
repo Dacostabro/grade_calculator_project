@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grade Calculator</title>
+</head>
+<body>
+  <h1>Grade Calculator</h1>
+  <p>Enter grades separated by commas:</p>
+  <input type="text" id="grades" placeholder="85,90,78">
+  <button onclick="submitGrades()">Calculate</button>
+  <pre id="result"></pre>
+
+  <script>
+    async function submitGrades() {
+      const raw = document.getElementById("grades").value;
+      const grades = raw.split(",").map(x => Number(x.trim()));
+
+      const response = await fetch("/calculate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ grades })
+      });
+
+      const data = await response.json();
+      document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
