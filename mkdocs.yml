@@ -1,0 +1,3 @@
+site_name: Grade Calculator Project
+nav:
+  - Home: docs/index.md
