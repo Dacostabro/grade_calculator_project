@@ -1,17 +1,29 @@
-# Welcome to MkDocs
+# Grade Calculator Project
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## Overview
+This project is a mini web application that calculates a student's average grade, letter grade, and pass/fail status.
 
-## Commands
+It was developed as part of a Software Automation project to demonstrate:
+- application development
+- white-box testing
+- black-box testing
+- CI/CD using GitHub Actions
+- deployment of a web application
+- software documentation using MkDocs
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Main Features
+- Accepts multiple numeric grades
+- Calculates average
+- Determines letter grade
+- Determines pass/fail status
+- Rejects invalid grades below 0 or above 100
+- Includes automated testing and deployment support
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Technologies Used
+- JavaScript
+- Node.js
+- Express
+- Jest
+- GitHub Actions
+- Render
+- MkDocs

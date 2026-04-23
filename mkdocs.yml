@@ -1,3 +1,11 @@
 site_name: Grade Calculator Project
+site_description: Documentation for the Grade Calculator CI/CD and testing project
+theme:
+  name: mkdocs
+
 nav:
-  - Home: docs/index.md
+  - Home: index.md
+  - Setup and Usage: setup.md
+  - Testing: testing.md
+  - CI/CD Pipeline: cicd.md
+  - Data Model and Schema: data-model.md
