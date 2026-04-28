@@ -18,6 +18,17 @@
       align-items: center;
       justify-content: center;
       color: #333;
+      overflow: hidden;
+    }
+
+    #cursorCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
     }
 
     /* ================= LOADER ================= */
@@ -67,6 +78,8 @@
       width: 470px;
       text-align: center;
       box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -142,6 +155,8 @@
 
 <body>
 
+<canvas id="cursorCanvas"></canvas>
+
 <!-- LOADER -->
 <div id="loader">
   <div class="spinner"></div>
@@ -206,6 +221,73 @@
       errorDiv.textContent = err.message;
     }
   }
+
+  // BLUE MOUSE TRAIL EFFECT
+  const canvas = document.getElementById("cursorCanvas");
+  const ctx = canvas.getContext("2d");
+
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  class Particle {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.size = Math.random() * 6 + 2;
+      this.speedX = (Math.random() - 0.5) * 2;
+      this.speedY = (Math.random() - 0.5) * 2;
+      this.alpha = 1;
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.alpha -= 0.025;
+      this.size *= 0.98;
+    }
+
+    draw() {
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = "#0096ff";
+      ctx.fillStyle = `rgba(0, 150, 255, ${this.alpha})`;
+
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  window.addEventListener("mousemove", (e) => {
+    for (let i = 0; i < 5; i++) {
+      particles.push(new Particle(e.clientX, e.clientY));
+    }
+  });
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((particle, index) => {
+      particle.update();
+      particle.draw();
+
+      if (particle.alpha <= 0 || particle.size <= 0.5) {
+        particles.splice(index, 1);
+      }
+    });
+
+    requestAnimationFrame(animateParticles);
+  }
+
+  animateParticles();
 </script>
 
 </body>
